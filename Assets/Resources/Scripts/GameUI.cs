@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class GameUI : MonoBehaviour
 {
     //declaration of variables
-    public TMPro.TextMeshProUGUI ScoreTxt;
+    public TMPro.TextMeshProUGUI ScoreTxt, inputPromptText;
     float score;
     [SerializeField] private float scorePerSecond;
     public int colorIndex;
@@ -18,6 +18,7 @@ public class GameUI : MonoBehaviour
     public Texture2D cursorTexture;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
+    private Player player;
 
     void Start()
     {
@@ -27,6 +28,8 @@ public class GameUI : MonoBehaviour
         purpleBucket = Resources.Load<Sprite>("Sprites/bucket_Purple");
         greenBucket = Resources.Load<Sprite>("Sprites/bucket_Green");
         bucket = GameObject.Find("CurrentColorHUD").GetComponent<Image>();
+        player = FindObjectOfType<Player>();
+
         bucket.gameObject.SetActive(false);
         colorIndex = -1;
     }
@@ -37,7 +40,7 @@ public class GameUI : MonoBehaviour
         if (_resetScore)
             score = 0;
         else
-            score += _relativeScore * Time.deltaTime;
+            if(player.ColorIndex != -1) score += _relativeScore * Time.deltaTime;
         //Shows current score
         ScoreTxt.text = score.ToString("#.");
         //Gives last score to the game manager
@@ -48,7 +51,8 @@ public class GameUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Space))    //press Q or Space to cycle through colors
         {
             if(!bucket.gameObject.activeSelf) bucket.gameObject.SetActive(true);
-            
+            if(inputPromptText.gameObject.activeSelf) inputPromptText.gameObject.SetActive(false);
+
             if (colorIndex == 2)
             {
                 colorIndex = 0;

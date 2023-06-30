@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
@@ -14,17 +12,19 @@ public class Spawner : MonoBehaviour
 
     private Vector3 randPosition;
     private float randX, randY;
+    private Player player;
     
     // Start is called before the first frame update
     void Start()
     {
         enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");  //load enemy prefab
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
     void Update()   //random spawning outside of screen
-    {
-
+    {   
+        if(player.ColorIndex == -1) return;
         if (spawnCount > 0)
         {
             randX = Random.Range(-8, 8);

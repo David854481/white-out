@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
-    public int colorIndex;
+    private int colorIndex;
+    public int ColorIndex { get => colorIndex;}
     [SerializeField]
     SpriteRenderer spriteRenderer;
 
