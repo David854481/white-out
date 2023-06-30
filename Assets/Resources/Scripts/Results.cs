@@ -31,11 +31,11 @@ public class Results : MonoBehaviour
         {
             GameManager.instance.HighScore = GameManager.instance.LastScore;
             _newHighScore = true;
-            PlayerPrefs.SetInt(GameManager.HighScorePref, GameManager.instance.HighScore);
+            PlayerPrefs.SetFloat(GameManager.HighScorePref, GameManager.instance.HighScore);
         }
         //Prints score + high score
         scoreTxts.text = string.Format("Your Score: {0}\nHigh Score: {1}",
-            GameManager.instance.LastScore, GameManager.instance.HighScore);
+            GameManager.instance.LastScore.ToString("#"), GameManager.instance.HighScore.ToString("#"));
         newHighScore.SetActive(_newHighScore);
     }
 

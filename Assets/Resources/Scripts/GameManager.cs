@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [HideInInspector]
-    public int HighScore, LastScore;
+    public float HighScore, LastScore;
     public const string HighScorePref = "High Score";
     public float musicVolume, soundVolume;
 

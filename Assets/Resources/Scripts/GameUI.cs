@@ -6,7 +6,8 @@ public class GameUI : MonoBehaviour
 {
     //declaration of variables
     public TMPro.TextMeshProUGUI ScoreTxt;
-    int score;
+    float score;
+    [SerializeField] private float scorePerSecond;
     public int colorIndex;
 
     public Sprite orangeBucket;
@@ -30,21 +31,21 @@ public class GameUI : MonoBehaviour
         colorIndex = -1;
     }
 
-    public void UpdateScore(int _relativeScore = 0, bool _resetScore = false)
+    public void UpdateScore(float _relativeScore = 0, bool _resetScore = false)
     {
         //Sets score to 0 on reset
         if (_resetScore)
             score = 0;
         else
-            score += _relativeScore;
+            score += _relativeScore * Time.deltaTime;
         //Shows current score
-        ScoreTxt.text = score.ToString();
+        ScoreTxt.text = score.ToString("#.");
         //Gives last score to the game manager
         GameManager.instance.LastScore = score;
     }
     private void changeColor()
     {
-        if (Input.GetKeyDown(KeyCode.Q))    //press Q to cycle through colors
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Space))    //press Q or Space to cycle through colors
         {
             if (colorIndex == 2)
             {
@@ -85,7 +86,7 @@ public class GameUI : MonoBehaviour
     void Update()
     {
         //Updates Score
-        UpdateScore(5);
+        UpdateScore(scorePerSecond);
         changeColor();
     }
 }

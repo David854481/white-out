@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
 
     private void changeColor()
     {
-        if (Input.GetKeyDown(KeyCode.Q))    //press Q to cycle through colors
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Space))    //press Q or Space to cycle through colors
         {
             if (colorIndex == 2)
             {
