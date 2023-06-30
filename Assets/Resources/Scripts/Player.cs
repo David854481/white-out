@@ -7,13 +7,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private GameObject Bullet;
+    private string bulletId;
     [SerializeField]
     private float speed = 5f;
-    [SerializeField]
     private int colorIndex;
     public int ColorIndex { get => colorIndex;}
-    [SerializeField]
     SpriteRenderer spriteRenderer;
 
     private Vector2 direction;
@@ -26,7 +24,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Bullet = Resources.Load<GameObject>("Prefabs/Bullet");
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         ColorUtility.TryParseHtmlString("#FF7400", out orange);
@@ -88,9 +85,16 @@ public class Player : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && colorIndex > -1)   //If mouse button pressed and character is not white
         {
-            //Replace parameters of vector2 with player position
-            Instantiate(Bullet, transform.position, Quaternion.identity);   //instantiate a bullet
-
+            //Get an object from the pool
+            GameObject bullet = ObjectPoolManager.Instance.GetPooledObject(bulletId);
+            //Did we get an object from the pool?
+            if(bullet != null)
+            {
+                //Position the enemy 
+                bullet.transform.position = transform.position;
+                bullet.transform.rotation = transform.rotation;
+                bullet.SetActive(true);
+            }
             //new audioooo -- do this again for enemy destroyed and ship destroyed
             AudioSystem.instance.PlaySound(AudioEnum.snd_shoot);
         }
@@ -146,6 +150,17 @@ public class Player : MonoBehaviour
             isAlive = false;
             SceneManager.LoadScene("ResultsMenu");
         }
+    }
+
+    public void DisableObject(GameObject objectToDisable, float time)
+    {
+        StartCoroutine(DisableObjectCoroutine(objectToDisable, time));
+    }
+
+    private IEnumerator DisableObjectCoroutine(GameObject objectToDisable, float time)
+    {
+        yield return new WaitForSeconds(time);
+        objectToDisable.SetActive(false);
     }
 }
 

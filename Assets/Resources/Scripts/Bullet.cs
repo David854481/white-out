@@ -9,7 +9,6 @@ namespace Bullette
     {
         [SerializeField]
         float speed = 10;
-        private float initializationTime;
 
         private Sprite spr_orange;
         private Sprite spr_purple;
@@ -25,19 +24,20 @@ namespace Bullette
         private SpriteRenderer spriteRenderer;
         private SpriteRenderer sr;
 
-        private ParticleSystem explosionGreen;
-        private ParticleSystem explosionPurple;
-        private ParticleSystem explosionOrange;
+        [SerializeField] private string explosionGreenID;
+        [SerializeField] private string explosionPurpleID;
+        [SerializeField] private string explosionOrangeID;
 
         Color orange;
         Color purple;
         Vector2 direction;
         Vector3 mousePosition;
+        private Player player;
 
-
-        private void Start()
+        private void Awake()
         {
-            sr = GameObject.Find("Ship").GetComponent<SpriteRenderer>(); //get the player's sprite renderer
+            player = FindObjectOfType<Player>();
+            sr = player.gameObject.GetComponent<SpriteRenderer>(); //get the player's sprite renderer
 
             spriteRenderer = this.GetComponent<SpriteRenderer>();
 
@@ -47,15 +47,19 @@ namespace Bullette
             spr_purple = Resources.Load<Sprite>("Sprites/Violet_Bullet_Pixel_Art");
             spr_green = Resources.Load<Sprite>("Sprites/Green_Bullet_Pixel_Art");
 
-            explosionGreen = Resources.Load<ParticleSystem>("Prefabs/ParticleGreen");
-            explosionPurple = Resources.Load<ParticleSystem>("Prefabs/ParticlePurple");
-            explosionOrange = Resources.Load<ParticleSystem>("Prefabs/ParticleOrange");
-
-            initializationTime = Time.timeSinceLevelLoad;
-
             ColorUtility.TryParseHtmlString("#FF7400", out orange);
             ColorUtility.TryParseHtmlString("#A500B5", out purple);
+        }
 
+        private void OnEnable()
+        {
+            SetSprite();
+            faceMouse();
+            StartCoroutine(DestroySelf());
+        }
+
+        private void SetSprite()
+        {
             if(sr.color == orange)
             {
                 spriteRenderer.sprite = spr_orange;
@@ -68,13 +72,6 @@ namespace Bullette
             {
                 spriteRenderer.sprite = spr_green;
             }
-
-            faceMouse();
-        }
-
-        public void Init()
-        {
-            Invoke("DestroySelf", 1.5f);
         }
 
         void faceMouse()
@@ -90,18 +87,15 @@ namespace Bullette
             transform.up = -direction;
         }
 
-        void DestroySelf()
+        IEnumerator DestroySelf()
         {
-            Destroy(gameObject);
+            yield return new WaitForSeconds(3f);
+            gameObject.SetActive(false);
         }
 
         void Update()
         {
-            
             transform.Translate(0, Time.deltaTime * -speed, 0); //move straight
-
-            //Destroys the bullet after 3 seconds
-            Destroy(gameObject, 3); 
         }
 
         void OnTriggerEnter2D(Collider2D _collider)
@@ -111,24 +105,43 @@ namespace Bullette
                 //if green bullet hits green enemy
                 if (_collider.gameObject.GetComponent<SpriteRenderer>().sprite == spr_enemyGreen && spriteRenderer.sprite == spr_green)  
                 {
-                    Instantiate(explosionGreen, transform.position, Quaternion.identity);
-                    Destroy(gameObject);
-                    Destroy(_collider.gameObject);
+                    InstantiateExplosion(explosionGreenID);
+                    HitEnemy(_collider.gameObject);
                 }
                 //if purple bullet hits purple enemy
                 if (_collider.gameObject.GetComponent<SpriteRenderer>().sprite == spr_enemyPurple && spriteRenderer.sprite == spr_purple)
                 {
-                    Instantiate(explosionPurple, transform.position, Quaternion.identity);
-                    Destroy(gameObject);
-                    Destroy(_collider.gameObject);
+                    InstantiateExplosion(explosionPurpleID);
+                    HitEnemy(_collider.gameObject);
                 }
                 //if green orange hits orange enemy
                 if (_collider.gameObject.GetComponent<SpriteRenderer>().sprite == spr_enemyOrange && spriteRenderer.sprite == spr_orange)
                 {
-                    Instantiate(explosionOrange, transform.position, Quaternion.identity);
-                    Destroy(gameObject);
-                    Destroy(_collider.gameObject);
+                    InstantiateExplosion(explosionOrangeID);
+                    HitEnemy(_collider.gameObject);
                 }
+            }
+        }
+
+        private void HitEnemy(GameObject enemy)
+        {
+            enemy.SetActive(false);
+
+            StopAllCoroutines();
+            gameObject.SetActive(false);
+        }
+
+        private void InstantiateExplosion(string explosionID)
+        {
+            //Get an object from the pool
+            GameObject explosion = ObjectPoolManager.Instance.GetPooledObject(explosionID);
+            //Did we get an object from the pool?
+            if(explosion != null)
+            {
+                //Position the enemy 
+                explosion.transform.position = transform.position;
+                explosion.SetActive(true);
+                player.DisableObject(explosion, 1f);
             }
         }
     }

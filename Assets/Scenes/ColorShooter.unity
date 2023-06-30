@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a419d0fac626f41b3cbce58f2edf01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
   spawnCount: 10
   waveSpawnTimer: 10
+  enemyId: Enemy
 --- !u!4 &196983098
 Transform:
   m_ObjectHideFlags: 0
@@ -389,6 +389,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707358543}
   m_CullTransparentMesh: 1
+--- !u!1 &847580772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 847580774}
+  - component: {fileID: 847580773}
+  m_Layer: 0
+  m_Name: ObjectPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &847580773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847580772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3532680a062771c43bf21f69b48cfd6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPresist: 0
+  itemsToPool:
+  - id: Enemy
+    objectToPool: {fileID: 266788304544586917, guid: 0183702386d739e4c86b97df6907af1f, type: 3}
+    parent: {fileID: 196983098}
+    amountToPool: 20
+    shouldExpand: 1
+  - id: Bullet
+    objectToPool: {fileID: 7722715680788592541, guid: 7bfa87849304d6b42aa740ad0f680f9a, type: 3}
+    parent: {fileID: 847580774}
+    amountToPool: 20
+    shouldExpand: 1
+  - id: ParticleGreen
+    objectToPool: {fileID: 1316110575583781971, guid: d79a8d9a4f55fe94dad8b4d9146dd4c6, type: 3}
+    parent: {fileID: 847580774}
+    amountToPool: 5
+    shouldExpand: 1
+  - id: ParticleOrange
+    objectToPool: {fileID: 5487031889211973776, guid: 9609fd7188a3c954c987b1e1c22ad7e4, type: 3}
+    parent: {fileID: 847580774}
+    amountToPool: 5
+    shouldExpand: 1
+  - id: ParticlePurple
+    objectToPool: {fileID: 2184169563561552904, guid: 5c92fb0ef948f7347a048515108adaac, type: 3}
+    parent: {fileID: 847580774}
+    amountToPool: 5
+    shouldExpand: 1
+  pooledObjects: []
+--- !u!4 &847580774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847580772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238524708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8785930636548154738, guid: d40505de25fe7bb4c83182bfc89f226a, type: 3}
       propertyPath: m_Name
-      value: Ship
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8785930636548154738, guid: d40505de25fe7bb4c83182bfc89f226a, type: 3}
       propertyPath: m_Layer

@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-       player = GameObject.Find("Ship");
+       player = GameObject.Find("Player");
     }
 
     // Start is called before the first frame update

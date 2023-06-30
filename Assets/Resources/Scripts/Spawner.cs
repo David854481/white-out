@@ -4,11 +4,11 @@ public class Spawner : MonoBehaviour
 {
     //Initialization of variables
     [SerializeField]
-    private GameObject enemyPrefab;
-    [SerializeField]
     private float spawnCount = 10;
     [SerializeField]
     private float waveSpawnTimer = 10;
+    [SerializeField]
+    private string enemyId;
 
     private Vector3 randPosition;
     private float randX, randY;
@@ -17,7 +17,6 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");  //load enemy prefab
         player = FindObjectOfType<Player>();
     }
 
@@ -69,6 +68,14 @@ public class Spawner : MonoBehaviour
 
     void Spawn()    //instantiate an enemy
     {
-        Instantiate(enemyPrefab, randPosition, transform.rotation);
+        //Get an object from the pool
+        GameObject enemy = ObjectPoolManager.Instance.GetPooledObject(enemyId);
+        //Did we get an object from the pool?
+        if(enemy != null)
+        {
+            //Position the enemy 
+            enemy.transform.position = randPosition;
+            enemy.SetActive(true);
+        }
     }
 }
