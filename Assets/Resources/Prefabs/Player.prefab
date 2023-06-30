@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 8547303286833294345}
   - component: {fileID: 5867063031589848788}
   - component: {fileID: -6344070934032288479}
+  - component: {fileID: 7748106144026487739}
   - component: {fileID: 4228023232364477978}
   - component: {fileID: 5514563186153595363}
   - component: {fileID: 1079511091754964097}
   m_Layer: 2
-  m_Name: Ship
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -46,10 +48,12 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -74,8 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5250757714165821188, guid: c7219967648ad3741b14c9ecb5c629e4,
-    type: 3}
+  m_Sprite: {fileID: 5250757714165821188, guid: c7219967648ad3741b14c9ecb5c629e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,6 +105,18 @@ MonoBehaviour:
   speed: 5
   colorIndex: 0
   spriteRenderer: {fileID: 0}
+--- !u!114 &7748106144026487739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8785930636548154738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6370fd6dcadf5d2459efa2e25be4f5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &4228023232364477978
 BoxCollider2D:
   m_ObjectHideFlags: 0
