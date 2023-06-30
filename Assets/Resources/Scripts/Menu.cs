@@ -26,12 +26,12 @@ public class Menu : MonoBehaviour
         GameObject.Find("SoundSlider").GetComponent<Slider>().normalizedValue = AudioSystem.instance.SoundSource.volume;
         GameObject.Find("MusicSlider").GetComponent<Slider>().normalizedValue = AudioSystem.instance.MusicSource.volume;
         //Fades in music
-        LeanTween.value(gameObject, 0f, AudioSystem.instance.MusicSource.volume, 0f)
+        /*LeanTween.value(gameObject, 0f, GameObject.Find("MusicSlider").GetComponent<Slider>().normalizedValue, 0f)
         .setEaseLinear()
         .setOnUpdate(delegate (float _val)
         {
             AudioSystem.instance.MusicSource.volume = _val;
-        });
+        });*/
         //Plays the music
         AudioSystem.instance.MusicSource.Play();
 
@@ -41,6 +41,7 @@ public class Menu : MonoBehaviour
         switch (_index)
         {
             case 0: //start
+                AudioSystem.instance.DefaultVolume = GameObject.Find("MusicSlider").GetComponent<Slider>().normalizedValue;
                 SceneManager.LoadScene("ColorShooter");
                 break;
             case 1: //Enters instructions menu

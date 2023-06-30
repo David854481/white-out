@@ -20,6 +20,8 @@ public class AudioSystem : MonoBehaviour
 
     public AudioSource SoundSource;
     public AudioSource MusicSource;
+    private float defaultVolume;
+    public float DefaultVolume { get => defaultVolume; set => defaultVolume = value; }
 
     void Awake()
     {

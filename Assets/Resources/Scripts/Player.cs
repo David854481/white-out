@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         AudioSystem.instance.PlayMusic(AudioEnum.mus_gameplay);
 
         //Fades in music
-        LeanTween.value(gameObject, 0f, AudioSystem.instance.MusicSource.volume, 0f)
+        LeanTween.value(gameObject, 0f, AudioSystem.instance.DefaultVolume, 1f)
         .setEaseLinear()
         .setOnUpdate(delegate (float _val)
         {
