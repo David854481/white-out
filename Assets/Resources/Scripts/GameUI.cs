@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -10,11 +9,11 @@ public class GameUI : MonoBehaviour
     [SerializeField] private float scorePerSecond;
     public int colorIndex;
 
-    public Sprite orangeBucket;
-    public Sprite purpleBucket;
-    public Sprite greenBucket;
+    private Sprite orangeBucket;
+    private Sprite purpleBucket;
+    private Sprite greenBucket;
 
-    public SpriteRenderer bucket;
+    private Image bucket;
     
     public Texture2D cursorTexture;
     public CursorMode cursorMode = CursorMode.Auto;
@@ -27,7 +26,8 @@ public class GameUI : MonoBehaviour
         orangeBucket = Resources.Load<Sprite>("Sprites/bucket_Orange");
         purpleBucket = Resources.Load<Sprite>("Sprites/bucket_Purple");
         greenBucket = Resources.Load<Sprite>("Sprites/bucket_Green");
-        bucket = GameObject.Find("CurrentColorHUD").GetComponent<SpriteRenderer>();
+        bucket = GameObject.Find("CurrentColorHUD").GetComponent<Image>();
+        bucket.gameObject.SetActive(false);
         colorIndex = -1;
     }
 
@@ -47,6 +47,8 @@ public class GameUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Space))    //press Q or Space to cycle through colors
         {
+            if(!bucket.gameObject.activeSelf) bucket.gameObject.SetActive(true);
+            
             if (colorIndex == 2)
             {
                 colorIndex = 0;
