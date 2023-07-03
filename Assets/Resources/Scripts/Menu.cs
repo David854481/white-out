@@ -12,7 +12,7 @@ public class Menu : MonoBehaviour
     public GameObject exitInstructionsButton;
     public GameObject exitSettingsButton;
     public GameObject startButton;
-    public GameObject exitButton;
+    //public GameObject exitButton;
     public GameObject instructionsButton;
     public GameObject settingsButton;
     public GameManager gameManager;
@@ -95,7 +95,7 @@ public class Menu : MonoBehaviour
         if (inWindow) //In active window (Settings,Instructions)
         {
             startButton.SetActive(false);
-            exitButton.SetActive(false);
+            //exitButton.SetActive(false);
             instructionsButton.SetActive(false);
             settingsButton.SetActive(false);
         }
@@ -103,7 +103,7 @@ public class Menu : MonoBehaviour
         else if (!inWindow) //Not in active window (Settings, Instructions)
         {
             startButton.SetActive(true);
-            exitButton.SetActive(true);
+            //exitButton.SetActive(true);
             instructionsButton.SetActive(true);
             settingsButton.SetActive(true);
         }
